@@ -1,0 +1,45 @@
+Puzzle: https://adventofcode.com/2019/day/7[Amplification Circuit]
+
+== Part 1
+
+At first I thought about re-writing my int computer to take the inputs and output commands (opcode=3,4) also via function calls instead of stdI/O.
+But I decided to take the challenge and instead try to mimick the standard input and output by turning my computer into a standalone ruby CLI.
+This `computer.rb` first asks for the program code, terminated by a newline followed by `EOP` (end of program) terminated by another newline.
+
+This allows me to test the computer with various programs and still providing everything via stdI/O.
+From Ruby I can create subprocesses to run the computer calculation using `stdout, stderr, status = Open3.capture3("ruby computer.rb", :stdin_data=>"%s\nEOP\n%i\n%i" % [program_str, phase_setting, input])`
+
+[plantuml, day7-p1, png]
+....
+@startuml
+!includeurl https://gist.githubusercontent.com/anoff/d8f48105ac4d3c7b14ca8c34d6d54938/raw/19261678934da0ab38a728f7edc1995ac22780ea/anoff.plantuml
+start
+:init max thruster signal = 0;
+while (for all valid phase settings)
+  :<b>spawn computer.rb;
+  :check if new maximum
+  thruster signal was achieved;
+endwhile
+:print max thruster signal;
+end
+@enduml
+....
+
+== Part 2
+
+
+== Solution
+
+To run the solution use `ruby solution.rb`
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
