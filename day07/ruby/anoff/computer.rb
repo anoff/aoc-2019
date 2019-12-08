@@ -1,4 +1,6 @@
 #!/usr/bin/ruby
+require "pty"
+
 def op(program, ptr)
   cmd = program[ptr]
   opcode = cmd % 100
@@ -80,7 +82,7 @@ def op(program, ptr)
 end
 
 def run_to_termination(program)
-  puts program.length
+  # puts program.length
   ptr = 0
   step = op(program, ptr)
   while step > 0
@@ -89,6 +91,36 @@ def run_to_termination(program)
   end
   if step < 0
     throw "Unexpected error occured: %d" % step
+  end
+end
+
+class Computer
+  @program_str
+  @stdin
+  @stdout
+  @stderr
+  @pid
+  attr_accessor :program_str, :stdin, :stdout, :stderr, :pid
+
+  def initialize(program_str)
+    @program_str = program_str
+    
+    cmd = "ruby computer.rb" 
+    begin
+      PTY.spawn(cmd) do |stdout, stdin, pid|
+        @stdout = stdout
+        @stdin = stdin
+        @pid = pid
+        stdin.puts program_str
+        stdin.puts "EOP"
+      end
+    rescue PTY::ChildExited
+      puts "The child process exited!"
+    end
+    return self
+  end
+  def terminated?()
+    (Process.getpgid(self.pid()) rescue nil) == nil
   end
 end
 
