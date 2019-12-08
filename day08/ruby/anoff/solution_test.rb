@@ -12,4 +12,11 @@ class TestSolution < Test::Unit::TestCase
     assert_equal result, split_to_layers(input, 3, 2)
   end
   # end::split[]
+
+  def test_merge_layers
+    input = "0222112222120000"
+    layers = split_to_layers(input, 2, 2)
+    result = ["01", "10"]
+    assert_equal result, merge_layers(layers)
+  end
 end

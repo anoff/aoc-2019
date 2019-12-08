@@ -15,6 +15,9 @@ For testing I built a simple test case that checks if splitting the data works w
 
 == Part 2
 
+This was pretty straightforward.
+Thought about what is the best way to do this and ended up building a nested for-loop.
+To actually be able to read the output I replaced `1->X` and `0->.`
 
 == Solution
 
