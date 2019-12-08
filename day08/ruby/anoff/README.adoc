@@ -1,0 +1,33 @@
+Puzzle: https://adventofcode.com/2019/day/8[Space Image Format]
+
+== Part 1
+
+For this one I decided to learn some ruby specific commands.
+To do that I basically googled a lot of questions to figure out if there are native methods available to the problems I would other wise solve with map/reduce/loops.
+
+Turns out there are; here are my google searches and the ruby commands I learned:
+
+. "ruby split string after n character" => `layers = data.chars.each_slice(pixels_per_layer).map(&:join)` instead of writing loops and picking pixels off the data array..
+. "ruby count character occurrence in string"  => `layer.join("").count("0")` instead of using a `.reduce{}` operation
+. "ruby find max in array and index in array" => `min_zero_index = layers.map{|layer| layer.join("").count("0")}.each_with_index.min[1]` instead of looping over all layers and searching for min
+
+For testing I built a simple test case that checks if splitting the data works with the given example.
+
+== Part 2
+
+
+== Solution
+
+To run the solution use `ruby solution.rb`
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

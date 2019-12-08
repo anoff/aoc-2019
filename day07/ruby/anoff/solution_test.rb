@@ -15,5 +15,4 @@ class TestSolution < Test::Unit::TestCase
       assert_equal result, test_phase_combination(input["phase"], input["program"])
     }
   end
-  # end::full_tdd[]
 end
